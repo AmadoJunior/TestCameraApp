@@ -1,9 +1,17 @@
-var constraints = {
+const constraints = {
   video:{
     facingMode: "environment"
   },
   audio: false
 }
+
+const tesseract = require("node-tesseract-ocr");
+const config = {
+  lang: "eng",
+  oem: 1,
+  psm: 3
+}
+
 
 const cameraView = document.querySelector("#camera_view"),
       cameraOutput = document.querySelector("#camera_output"),
@@ -29,6 +37,13 @@ cameraTrigger.onclick = function(){
   cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
   cameraOutput.src = cameraSensor.toDataURL("img/webp");
   cameraOutput.classList.add("taken");
+  tesseract.recognize(cameraSensor.toDataURL("img/webp"), config)
+  .then((text) => {
+    console.log("Result:", text);
+  })
+  .catch((error) => {
+    console.log(error.message);
+  })
 };
 
 //Start the video stream when the window loads
