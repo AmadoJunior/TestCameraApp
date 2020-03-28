@@ -1,6 +1,6 @@
-const constraints = {
+var constraints = {
   video:{
-    facingMode: "invironment"
+    facingMode: "user"
   },
   audio: false
 }
@@ -12,8 +12,8 @@ const cameraView = document.querySelector("#camera_view"),
 
 
 //cameraStart will acces the camera and stream the video to the camera_view
-const cameraStart = () => {
-  navigator.mediaDevices.getUserMedia(constraints)//returns promise "stream"
+function cameraStart(){
+  navigator.mediaDevices.getUserMedia(constraints)
   .then((stream) => {
     track = stream.getTracks()[0];
     cameraView.srcObject = stream;
@@ -23,7 +23,7 @@ const cameraStart = () => {
   })
 }
 
-cameraTrigger.onclick = () => {
+cameraTrigger.onclick = function(){
   cameraSensor.width = cameraView.videoWidth;
   cameraSensor.height = cameraView.videoWidth;
   cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
