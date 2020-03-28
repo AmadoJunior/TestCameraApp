@@ -1,5 +1,7 @@
-const constraints = {
-  video:true,
+var constraints = {
+  video:{
+    facingMode: "user"
+  },
   audio: false
 }
 
